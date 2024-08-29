@@ -31,7 +31,12 @@ public class ConcentrateMovement {
     @JoinColumn(name = "user_id")
     private UserAsigned user;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_target_cage")
     private Cage target_cage;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_send_cage")
     private Cage send_cage;
 
     private ConcentrateMovementOptions moves;
