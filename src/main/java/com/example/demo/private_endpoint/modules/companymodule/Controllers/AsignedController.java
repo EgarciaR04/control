@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.User.User_;
 import com.example.demo.private_endpoint.Message;
 import com.example.demo.private_endpoint.modules.companymodule.Models.UserAsigned;
 import com.example.demo.private_endpoint.modules.companymodule.Service.AsigneedService;
+import com.example.demo.private_endpoint.views.UserView;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,8 +24,8 @@ public class AsignedController {
     private final AsigneedService asigneedService;
 
     @GetMapping(path = "/users/{id}/company")
-    public List<User_> findUsers(@PathVariable long id) {
-        List<User_> user = this.asigneedService.findUserByCompanyId(id);
+    public List<UserView> findUsers(@PathVariable long id) {
+        List<UserView> user = this.asigneedService.findUserByCompanyId(id);
         return user;
     }
 

@@ -1,7 +1,5 @@
 package com.example.demo.private_endpoint.modules.companymodule.Controllers;
 
-import java.util.Optional;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -16,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.User.User_;
 import com.example.demo.private_endpoint.modules.companymodule.Service.UserService;
+import com.example.demo.private_endpoint.views.UserView;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,12 +31,12 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping(path = "{id}/select")
-    public Optional<User_> getUserById(@PathVariable long id) {
+    public UserView getUserById(@PathVariable long id) {
         return this.userService.getUserById(id);
     }
 
     @PutMapping(path = "{id}/update")
-    public User_ updateUserById(@RequestBody User_ request, @PathVariable long id) {
+    public UserView updateUserById(@RequestBody User_ request, @PathVariable long id) {
         return this.userService.updateUserById(request, id);
     }
 }

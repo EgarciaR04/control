@@ -41,8 +41,15 @@ public class User_ implements UserDetails {
   String country;
   String password;
   @Column(nullable = true)
+  String tel;
+  @Column(nullable = true)
   @Enumerated(EnumType.STRING)
   Role role;
+  boolean hability;
+
+  public boolean getHability() {
+    return this.hability;
+  }
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
