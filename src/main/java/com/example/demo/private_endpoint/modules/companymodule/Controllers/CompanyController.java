@@ -22,17 +22,17 @@ public class CompanyController {
 
     private final CompanyService companyService;
 
-    @GetMapping(path = "{id}/search")
+    @GetMapping(path = "{id}/select")
     public Optional<Company> getCompanyBiId(@PathVariable long id) {
         return this.companyService.getCompanyById(id);
     }
 
-    @PostMapping()
+    @PostMapping(path = "/create")
     public Company saveCompany(@RequestBody Company request) {
         return this.companyService.saveCompany(request);
     }
 
-    @PutMapping(path = "{id}")
+    @PutMapping(path = "{id}/update")
     public Company updateCompanyById(@RequestBody Company request, @PathVariable long id) {
         return this.companyService.updateCompanyById(request, id);
     }

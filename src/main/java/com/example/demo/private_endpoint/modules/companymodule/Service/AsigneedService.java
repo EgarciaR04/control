@@ -25,17 +25,6 @@ public class AsigneedService {
         return asignedRepository.findUserByCompanyId(id);
     }
 
-    public UserAsigned updateAsigned(UserAsigned request, long id) {
-        UserAsigned asigned = asignedRepository.findById(id).get();
-
-        asigned.setUser(request.getUser());
-        asigned.setCompany(request.getCompany());
-
-        asignedRepository.save(asigned);
-
-        return asigned;
-    }
-
     public Message saveAsigned(UserAsigned request) {
         User_ user = request.getUser();
 

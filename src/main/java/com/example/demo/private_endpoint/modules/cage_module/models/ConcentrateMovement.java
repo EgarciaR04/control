@@ -41,4 +41,5 @@ public class ConcentrateMovement {
 
     private ConcentrateMovementOptions moves;
     private int amount;
+
 }
