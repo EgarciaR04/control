@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.User.User_;
 import com.example.demo.auth.AuthService;
-import com.example.demo.private_endpoint.Message;
 import com.example.demo.private_endpoint.modules.companymodule.Models.Company;
 import com.example.demo.private_endpoint.modules.companymodule.Models.UserAsigned;
 import com.example.demo.private_endpoint.modules.companymodule.Repositories.AsignedRepository;
+import com.example.demo.private_endpoint.views.Message;
 import com.example.demo.private_endpoint.views.UserView;
 
 import lombok.RequiredArgsConstructor;

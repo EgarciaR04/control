@@ -1,5 +1,7 @@
 package com.example.demo.private_endpoint.modules.cage_module.models;
 
+import com.example.demo.private_endpoint.modules.animal_module.models.Animal;
+
 // import java.time.LocalDateTime;
 
 import com.example.demo.private_endpoint.modules.companymodule.Models.UserAsigned;
@@ -43,9 +45,17 @@ public class Cage {
     @JoinColumn(name = "id_feed_a")
     private FeedAnimal feedAnimal;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_animal", nullable = true)
+    private Animal animal;
+
     private String code;
     private String name;
     private boolean active;
     @Column(nullable = true)
     private String observations;
+
+    public boolean getActive() {
+        return this.active;
+    }
 }

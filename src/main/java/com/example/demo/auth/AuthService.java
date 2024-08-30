@@ -34,10 +34,12 @@ public class AuthService {
                 try {
                         long id = userRepository.findByUsername2(request.getUsername());
                         long company = asR.findCompanyByUser(id);
+                        long asig = asR.findIdByUserName(request.getUsername());
                         return AuthResponse.builder()
                                         .token(token)
                                         .user(id)
                                         .company(company)
+                                        .asig(asig)
                                         .build();
                 } catch (Exception ex) {
                         System.out.println(ex.getCause());
@@ -45,6 +47,7 @@ public class AuthService {
                                         .token(token)
                                         .company(-1)
                                         .user(-1)
+                                        .asig(-1)
                                         .build();
                 }
         }

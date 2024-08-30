@@ -18,4 +18,10 @@ public interface AsignedRepository extends JpaRepository<UserAsigned, Long> {
 
     @Query("SELECT ua.user FROM UserAsigned ua WHERE ua.company.id = :companyId")
     List<User_> findUserByCompanyId(@Param("companyId") long companyId);
+
+    @Query("SELECT ua.id FROM UserAsigned ua WHERE ua.user.username = :username")
+    long findIdByUserName(@Param("username") String username);
+
+    @Query("SELECT a FROM UserAsigned a WHERE a.id = :id_asg")
+    UserAsigned findAsignedById(@Param("id_asg") long id);
 }

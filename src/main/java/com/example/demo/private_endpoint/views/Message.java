@@ -1,4 +1,4 @@
-package com.example.demo.private_endpoint;
+package com.example.demo.private_endpoint.views;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.private_endpoint.Message;
 import com.example.demo.private_endpoint.modules.companymodule.Models.UserAsigned;
 import com.example.demo.private_endpoint.modules.companymodule.Service.AsigneedService;
+import com.example.demo.private_endpoint.views.Message;
 import com.example.demo.private_endpoint.views.UserView;
 
 import lombok.RequiredArgsConstructor;

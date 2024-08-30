@@ -35,5 +35,10 @@ public class Animal {
     private String animal_name;
     @Column(nullable = true)
     private String observations;
+    private boolean hability;
+
+    public boolean getHability() {
+        return this.hability;
+    }
 
 }

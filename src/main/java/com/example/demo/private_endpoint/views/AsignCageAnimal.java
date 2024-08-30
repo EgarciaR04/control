@@ -1,4 +1,4 @@
-package com.example.demo.auth;
+package com.example.demo.private_endpoint.views;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,11 +7,8 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class AuthResponse {
-    String token;
-    long user;
-    long company;
-    long asig;
+@NoArgsConstructor
+public class AsignCageAnimal {
+    private long animal;
 }

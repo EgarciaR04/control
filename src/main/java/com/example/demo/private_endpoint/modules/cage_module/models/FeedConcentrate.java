@@ -20,6 +20,6 @@ public class FeedConcentrate {
     @GeneratedValue
     private long id;
 
-    private int amount;
+    private float amount;
 
 }
