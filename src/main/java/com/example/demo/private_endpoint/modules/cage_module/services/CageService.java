@@ -5,13 +5,15 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Service;
 
+import com.example.demo.private_endpoint.inputs.AsignCageAnimalData;
 import com.example.demo.private_endpoint.modules.animal_module.models.Animal;
 import com.example.demo.private_endpoint.modules.animal_module.repositories.AnimalRespository;
 import com.example.demo.private_endpoint.modules.cage_module.models.Cage;
+import com.example.demo.private_endpoint.modules.cage_module.models.FeedAnimal;
 import com.example.demo.private_endpoint.modules.cage_module.repositories.CageRepository;
+import com.example.demo.private_endpoint.modules.cage_module.repositories.FeedAnimalRepository;
 import com.example.demo.private_endpoint.modules.companymodule.Models.UserAsigned;
 import com.example.demo.private_endpoint.modules.companymodule.Repositories.AsignedRepository;
-import com.example.demo.private_endpoint.views.AsignCageAnimal;
 import com.example.demo.private_endpoint.views.CageView;
 import com.example.demo.private_endpoint.views.Message;
 
@@ -24,6 +26,7 @@ public class CageService {
     private final CageRepository cageRepository;
     private final AsignedRepository asR;
     private final AnimalRespository aR;
+    private final FeedAnimalRepository faR;
 
     public Message saveCage(Cage request) {
         UserAsigned user = request.getUser();
@@ -57,6 +60,12 @@ public class CageService {
             cv.setFeedconcentrate(c.getFeedConcentrate().getAmount());
             cv.setFeedanimal(c.getFeedAnimal().getAnimal_amount());
 
+            try {
+                cv.setAnimal_name(c.getAnimal().getAnimal_name());
+            } catch (Exception ex) {
+                cv.setAnimal_name("Animal no ingresado");
+            }
+
             cage_view.add(cv);
         }
 
@@ -75,6 +84,12 @@ public class CageService {
         cage_view.setObservations(cage.getObservations());
         cage_view.setFeedconcentrate(cage.getFeedConcentrate().getAmount());
         cage_view.setFeedanimal(cage.getFeedAnimal().getAnimal_amount());
+
+        try {
+            cage_view.setAnimal_name(cage.getAnimal().getAnimal_name());
+        } catch (Exception ex) {
+            cage_view.setAnimal_name("Animal no ingresado");
+        }
 
         return cage_view;
     }
@@ -100,7 +115,7 @@ public class CageService {
         return cage_view;
     }
 
-    public Message asignCageAnimal(AsignCageAnimal animal, long id_cage) {
+    public Message asignCageAnimal(AsignCageAnimalData animal, long id_cage) {
         Cage cage = cageRepository.findById(id_cage).get();
 
         Animal a = aR.findAnimal(animal.getAnimal());
@@ -111,6 +126,22 @@ public class CageService {
 
         Message message = new Message();
         message.setMessage("Animal asignado correctamente");
+
+        return message;
+    }
+
+    public Message animalDied(long id) {
+        Cage cage = cageRepository.findById(id).get();
+
+        FeedAnimal animal_amount = faR.findById(cage.getFeedAnimal().getId()).get();
+
+        animal_amount.setAnimal_amount(animal_amount.getAnimal_amount() - 1);
+
+        faR.save(animal_amount);
+
+        Message message = new Message();
+
+        message.setMessage("Se ha dado de baja a un animal");
 
         return message;
 

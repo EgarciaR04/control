@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.private_endpoint.inputs.AsignCageAnimalData;
 import com.example.demo.private_endpoint.modules.cage_module.models.Cage;
 import com.example.demo.private_endpoint.modules.cage_module.services.CageService;
-import com.example.demo.private_endpoint.views.AsignCageAnimal;
 import com.example.demo.private_endpoint.views.CageView;
 import com.example.demo.private_endpoint.views.Message;
 
@@ -47,8 +47,7 @@ public class CageController {
     }
 
     @PatchMapping(path = "{id}/animal/set")
-    public Message setAnimal(@RequestBody AsignCageAnimal animal, @PathVariable long id) {
+    public Message setAnimal(@RequestBody AsignCageAnimalData animal, @PathVariable long id) {
         return this.cageService.asignCageAnimal(animal, id);
     }
-
 }

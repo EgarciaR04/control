@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class CageView {
     private long id;
     private long user;
+    private String animal_name;
     private String code;
     private String name;
     private boolean active;
