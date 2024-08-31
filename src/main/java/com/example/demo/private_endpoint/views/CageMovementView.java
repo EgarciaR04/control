@@ -13,10 +13,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AnimalInOutView {
-    private long user;
-    private LocalDateTime date;
-    private float weight;
-    private float age;
-    private AnimalInOutOptions option;
+public class CageMovementView {
+    private String user_username;
+    private String cage_code;
+    private AnimalInOutOptions movement_option;
+    private LocalDateTime time;
+
 }

@@ -11,4 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AsignCageAnimalData {
     private long animal;
+    private Integer animal_amount;
+    private float concentrate_amount;
 }

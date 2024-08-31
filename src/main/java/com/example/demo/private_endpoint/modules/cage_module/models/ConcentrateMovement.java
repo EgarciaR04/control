@@ -6,6 +6,7 @@ import com.example.demo.private_endpoint.modules.companymodule.Models.UserAsigne
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -23,7 +24,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "movimiento_de_concentrado")
 public class ConcentrateMovement {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     // usuario que realizó el movimiento

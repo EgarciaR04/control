@@ -6,12 +6,15 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.private_endpoint.inputs.AsignCageAnimalData;
+import com.example.demo.private_endpoint.inputs.CageInput;
 import com.example.demo.private_endpoint.modules.animal_module.models.Animal;
 import com.example.demo.private_endpoint.modules.animal_module.repositories.AnimalRespository;
 import com.example.demo.private_endpoint.modules.cage_module.models.Cage;
 import com.example.demo.private_endpoint.modules.cage_module.models.FeedAnimal;
+import com.example.demo.private_endpoint.modules.cage_module.models.FeedConcentrate;
 import com.example.demo.private_endpoint.modules.cage_module.repositories.CageRepository;
 import com.example.demo.private_endpoint.modules.cage_module.repositories.FeedAnimalRepository;
+import com.example.demo.private_endpoint.modules.cage_module.repositories.FeedConcentrateRepository;
 import com.example.demo.private_endpoint.modules.companymodule.Models.UserAsigned;
 import com.example.demo.private_endpoint.modules.companymodule.Repositories.AsignedRepository;
 import com.example.demo.private_endpoint.views.CageView;
@@ -27,13 +30,26 @@ public class CageService {
     private final AsignedRepository asR;
     private final AnimalRespository aR;
     private final FeedAnimalRepository faR;
+    private final FeedConcentrateRepository fcR;
 
-    public Message saveCage(Cage request) {
-        UserAsigned user = request.getUser();
+    public Message saveCage(CageInput request) {
+        Cage cage = new Cage();
 
-        request.setUser(asR.findAsignedById(user.getId()));
+        FeedAnimal feedAnimal = new FeedAnimal();
+        feedAnimal.setAnimal_amount(0);
+        FeedConcentrate feedConcentrate = new FeedConcentrate();
+        feedConcentrate.setAmount(0);
 
-        cageRepository.save(request);
+        cage.setActive(request.getActive());
+        cage.setAnimal(null);
+        cage.setFeedAnimal(feedAnimal);
+        cage.setFeedConcentrate(feedConcentrate);
+        cage.setName(request.getName());
+        cage.setCode(request.getCode());
+        cage.setObservations(request.getObservations());
+        cage.setUser(asR.findAsignedById(request.getUser()));
+
+        cageRepository.save(cage);
 
         Message message = new Message();
 
@@ -43,7 +59,9 @@ public class CageService {
     }
 
     public List<CageView> findAllCageInCompany(long id_user) {
-        List<Cage> cages = cageRepository.findAllCagesInCompany(id_user);
+        UserAsigned user = asR.findAsignedById(id_user);
+
+        List<Cage> cages = cageRepository.findAllCagesInCompany(user.getCompany().getId());
 
         List<CageView> cage_view = new ArrayList<>();
 
@@ -119,7 +137,13 @@ public class CageService {
         Cage cage = cageRepository.findById(id_cage).get();
 
         Animal a = aR.findAnimal(animal.getAnimal());
+        FeedAnimal fa = cage.getFeedAnimal();
+        fa.setAnimal_amount(animal.getAnimal_amount());
+        FeedConcentrate fc = cage.getFeedConcentrate();
+        fc.setAmount(animal.getConcentrate_amount());
 
+        cage.setFeedAnimal(fa);
+        cage.setFeedConcentrate(fc);
         cage.setAnimal(a);
 
         cageRepository.save(cage);
@@ -145,6 +169,35 @@ public class CageService {
 
         return message;
 
+    }
+
+    public Message removeAnimal(long id_cage) {
+        Cage cage = cageRepository.findById(id_cage).get();
+
+        FeedAnimal animal_amount = faR.findById(cage.getFeedAnimal().getId()).get();
+
+        animal_amount.setAnimal_amount(animal_amount.getAnimal_amount() - 1);
+
+        faR.save(animal_amount);
+
+        Message message = new Message();
+
+        message.setMessage("Se ha registrado la salida del animal");
+
+        return message;
+    }
+
+    public void removeAllAnimal(long id_cage) {
+        Cage cage = cageRepository.findById(id_cage).get();
+
+        FeedAnimal animal_amount = faR.findById(cage.getFeedAnimal().getId()).get();
+        FeedConcentrate concentrate_amount = fcR.findById(cage.getFeedConcentrate().getId()).get();
+
+        animal_amount.setAnimal_amount(0);
+        concentrate_amount.setAmount(0);
+
+        fcR.save(concentrate_amount);
+        faR.save(animal_amount);
     }
 
 }

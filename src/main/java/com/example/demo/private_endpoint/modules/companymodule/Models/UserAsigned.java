@@ -5,6 +5,7 @@ import com.example.demo.User.User_;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -24,7 +25,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "asignacion", uniqueConstraints = { @UniqueConstraint(columnNames = { "user" }) })
 public class UserAsigned {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     // Asignacion de usuario a empresa con llave foranea Uno a uno

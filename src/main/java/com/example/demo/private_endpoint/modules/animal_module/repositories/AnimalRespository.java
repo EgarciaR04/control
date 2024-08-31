@@ -12,7 +12,7 @@ public interface AnimalRespository extends JpaRepository<Animal, Long> {
     @Query("SELECT a FROM Animal a WHERE a.id = :id_animal")
     Animal findAnimal(@Param("id_animal") long id_animal);
 
-    @Query("SELECT a FROM Animal a WHERE a.user.id = :id_user")
+    @Query("SELECT a FROM Animal a WHERE a.user.company.id = :id_user")
     List<Animal> findAnimalInCompany(@Param("id_user") long id_user);
 
 }

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AnimalDiedData {
+public class AnimalMovementData {
     private float weight;
     private float age;
 }

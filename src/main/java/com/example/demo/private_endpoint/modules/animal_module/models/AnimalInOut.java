@@ -2,12 +2,16 @@ package com.example.demo.private_endpoint.modules.animal_module.models;
 
 import java.time.LocalDateTime;
 
+import com.example.demo.private_endpoint.modules.animal_module.models.options.AnimalInOutOptions;
 import com.example.demo.private_endpoint.modules.companymodule.Models.UserAsigned;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -25,7 +29,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "ingreso_salida_animales")
 public class AnimalInOut {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -38,5 +42,8 @@ public class AnimalInOut {
 
     @Column(nullable = true)
     private float age;
+
+    @Enumerated(EnumType.STRING)
+    private AnimalInOutOptions option;
 
 }

@@ -47,8 +47,10 @@ public class AnimalService {
         return animal_view;
     }
 
-    public List<AnimalView> findAnimalsInCompany(long id_company) {
-        List<Animal> animals = animalRespository.findAnimalInCompany(id_company);
+    public List<AnimalView> findAnimalsInCompany(long id_user) {
+        UserAsigned user = asr.findAsignedById(id_user);
+
+        List<Animal> animals = animalRespository.findAnimalInCompany(user.getCompany().getId());
 
         List<AnimalView> animals_view = new ArrayList<>();
 

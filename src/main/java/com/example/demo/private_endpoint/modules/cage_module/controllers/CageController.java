@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.private_endpoint.inputs.AsignCageAnimalData;
+import com.example.demo.private_endpoint.inputs.CageInput;
 import com.example.demo.private_endpoint.modules.cage_module.models.Cage;
 import com.example.demo.private_endpoint.modules.cage_module.services.CageService;
 import com.example.demo.private_endpoint.views.CageView;
@@ -27,7 +28,7 @@ public class CageController {
     private final CageService cageService;
 
     @PostMapping(path = "/create")
-    public Message saveCage(@RequestBody Cage request) {
+    public Message saveCage(@RequestBody CageInput request) {
         return this.cageService.saveCage(request);
     }
 

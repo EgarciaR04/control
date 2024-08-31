@@ -10,7 +10,7 @@ import com.example.demo.private_endpoint.modules.animal_module.models.AnimalInOu
 
 public interface AnimalInOutRepository extends JpaRepository<AnimalInOut, Long> {
 
-    @Query("SELECT aio FROM AnimalInOut aio WHERE aio.user.id = :id_asig")
+    @Query("SELECT aio FROM AnimalInOut aio WHERE aio.user.company.id = :id_asig")
     List<AnimalInOut> findReportAnimalInOut(@Param("id_asig") long id);
 
 }
