@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 import com.example.demo.private_endpoint.inputs.AnimalMovementData;
 import com.example.demo.private_endpoint.modules.animal_module.models.AnimalInOut;
 import com.example.demo.private_endpoint.modules.animal_module.models.options.AnimalInOutOptions;
-import com.example.demo.private_endpoint.modules.animal_module.repositories.AnimalInOutRepository;
 import com.example.demo.private_endpoint.modules.animal_module.repositories.AnimalRespository;
 import com.example.demo.private_endpoint.modules.cage_module.models.AsigCageMovement;
 import com.example.demo.private_endpoint.modules.cage_module.models.Cage;
@@ -20,7 +19,6 @@ import com.example.demo.private_endpoint.modules.cage_module.repositories.FeedCo
 import com.example.demo.private_endpoint.modules.cage_module.services.CageService;
 import com.example.demo.private_endpoint.modules.companymodule.Models.UserAsigned;
 import com.example.demo.private_endpoint.modules.companymodule.Repositories.AsignedRepository;
-import com.example.demo.private_endpoint.views.AnimalInOutView;
 import com.example.demo.private_endpoint.views.CageMovementView;
 import com.example.demo.private_endpoint.views.Message;
 
@@ -30,7 +28,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AnimalInOutService {
 
-    private final AnimalInOutRepository animalInOutRepository;
     private final AsignedRepository asR;
     private final CageRepository cR;
     private final AsigCageMovementRepository asCMR;

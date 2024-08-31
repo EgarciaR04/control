@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.private_endpoint.inputs.AnimalMovementData;
 import com.example.demo.private_endpoint.modules.animal_module.services.AnimalInOutService;
-import com.example.demo.private_endpoint.views.AnimalInOutView;
 import com.example.demo.private_endpoint.views.CageMovementView;
 import com.example.demo.private_endpoint.views.Message;
 
