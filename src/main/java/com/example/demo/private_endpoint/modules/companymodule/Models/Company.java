@@ -29,7 +29,8 @@ public class Company {
     String company_name;
     String address;
     String nit;
-    String dueño;
+    String owner;
+    String usernameExtension;
     String tel;
     String observations;
     String deparment;

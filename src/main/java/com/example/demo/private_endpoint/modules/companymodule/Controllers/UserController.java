@@ -1,18 +1,15 @@
 package com.example.demo.private_endpoint.modules.companymodule.Controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import com.example.demo.private_endpoint.DTOs.ActUser;
+import com.example.demo.private_endpoint.DTOs.ActUserPassword;
+import com.example.demo.private_endpoint.views.Message;
+import org.springframework.web.bind.annotation.*;
 
 // import java.util.List;
 
 // import org.springframework.web.bind.annotation.GetMapping;
 // import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.User.User_;
 import com.example.demo.private_endpoint.modules.companymodule.Service.UserService;
 import com.example.demo.private_endpoint.views.UserView;
 
@@ -22,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 // import com.auth.demo_jwt.private_endpoint.Service.UserService;
 
 // import lombok.RequiredArgsConstructor;
-
+@CrossOrigin
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
@@ -36,7 +33,12 @@ public class UserController {
     }
 
     @PutMapping(path = "{id}/update")
-    public UserView updateUserById(@RequestBody User_ request, @PathVariable long id) {
+    public Message updateUserById(@RequestBody ActUser request, @PathVariable long id) {
         return this.userService.updateUserById(request, id);
+    }
+
+    @PutMapping(path = "{id}/update/password")
+    public Message updateUserPassword(@RequestBody ActUserPassword request, @PathVariable long id){
+        return this.userService.updatePassword(request, id);
     }
 }

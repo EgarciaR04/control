@@ -38,8 +38,6 @@ public class User_ implements UserDetails {
   String firstname;
   @Column(nullable = false)
   String lastname;
-  @Column(nullable = true)
-  String country;
   String password;
   @Column(nullable = true)
   String tel;
@@ -47,9 +45,17 @@ public class User_ implements UserDetails {
   @Enumerated(EnumType.STRING)
   Role role;
   boolean hability;
+  boolean changePassword;
+  boolean changePasswordNextSession;
 
   public boolean getHability() {
     return this.hability;
+  }
+  public boolean getChangePassword() {
+    return this.changePassword;
+  }
+  public boolean getChangePasswordNextSession() {
+    return this.changePasswordNextSession;
   }
 
   @Override

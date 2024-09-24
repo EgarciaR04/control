@@ -22,7 +22,4 @@ public class FeedConcentrate {
     private long id;
 
     private float amount;
-
-    private String name_concentrate;
-
 }

@@ -1,4 +1,4 @@
-package com.example.demo.private_endpoint.inputs;
+package com.example.demo.private_endpoint.DTOs;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

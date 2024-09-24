@@ -3,6 +3,8 @@ package com.example.demo.private_endpoint.modules.companymodule.Service;
 import java.util.List;
 import java.util.ArrayList;
 
+import com.example.demo.private_endpoint.DTOs.CreateUser;
+import com.example.demo.private_endpoint.modules.companymodule.Repositories.CompanyRepository;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.User.User_;
@@ -20,25 +22,30 @@ import lombok.RequiredArgsConstructor;
 public class AsigneedService {
 
     private final AsignedRepository asignedRepository;
+    private final CompanyRepository companyRepository;
     private final AuthService auth;
     private final CompanyService cs;
 
     public List<UserView> findUserByCompanyId(long id) {
-        List<User_> users = asignedRepository.findUserByCompanyId(id);
+        Company company = companyRepository.findCompanyByUserAsigned(id).get();
+
+        List<UserAsigned> users = asignedRepository.findUserByCompanyId(company.getId());
 
         List<UserView> users_view = new ArrayList<>();
         for (int i = 0; i < users.size(); i++) {
-            User_ u = users.get(i);
+            UserAsigned u = users.get(i);
 
             UserView uv = new UserView();
             uv.setId(u.getId());
-            uv.setUsername(u.getUsername());
-            uv.setFirstname(u.getFirstname());
-            uv.setLastname(u.getLastname());
-            uv.setCountry(u.getCountry());
-            uv.setRole(u.getRole());
-            uv.setTel(u.getTel());
-            uv.setHability(u.getHability());
+            uv.setUsername(u.getUser().getUsername());
+            uv.setFirstname(u.getUser().getFirstname());
+            uv.setLastname(u.getUser().getLastname());
+            uv.setTel(u.getUser().getTel());
+            uv.setHability(u.getUser().getHability());
+            uv.setRole(u.getUser().getRole());
+            uv.setChangePassword(u.getUser().getChangePassword());
+            uv.setChangePasswordNextSession(u.getUser().getChangePasswordNextSession());
+
 
             users_view.add(uv);
         }
@@ -46,20 +53,31 @@ public class AsigneedService {
         return users_view;
     }
 
-    public Message saveAsigned(UserAsigned request) {
-        User_ user = request.getUser();
+    public Message saveAsigned(CreateUser request) {
+        Company company = companyRepository.findCompanyByUserAsigned(request.getId_asig()).get();
 
-        request.setUser(auth.resgiterUserByUser(user));
+        User_ user = new User_();
+        UserAsigned userAsigned = new UserAsigned();
 
-        Company company = cs.findById(request.getCompany().getId());
+        user.setUsername(request.getUsername() + "@" +company.getUsernameExtension());
+        user.setPassword(request.getPassword());
+        user.setFirstname(request.getFirstname());
+        user.setLastname(request.getLastname());
+        user.setTel(request.getTel());
+        user.setHability(request.getHability());
+        user.setChangePassword(request.getChangePassword());
+        user.setChangePasswordNextSession(request.getChangePasswordNextSession());
 
-        request.setCompany(company);
+
+        userAsigned.setCompany(company);
+        userAsigned.setUser(auth.resgiterUserByUser(user));
+
 
         Message message = new Message();
 
         message.setMessage("Usuario creado correctamente");
 
-        asignedRepository.save(request);
+        asignedRepository.save(userAsigned);
 
         return message;
     }

@@ -4,6 +4,7 @@ import com.example.demo.private_endpoint.modules.animal_module.models.Animal;
 
 // import java.time.LocalDateTime;
 
+import com.example.demo.private_endpoint.modules.animal_module.models.Concentrate;
 import com.example.demo.private_endpoint.modules.companymodule.Models.UserAsigned;
 
 import jakarta.persistence.CascadeType;
@@ -49,6 +50,10 @@ public class Cage {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_animal", nullable = true)
     private Animal animal;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_concentrate")
+    private Concentrate concentrate;
 
     private String code;
     private String name;

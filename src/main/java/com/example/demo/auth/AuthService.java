@@ -32,21 +32,15 @@ public class AuthService {
                 UserDetails userDetails = userRepository.findByUsername(request.getUsername()).orElseThrow();
                 String token = jwtService.getToken(userDetails);
                 try {
-                        long id = userRepository.findByUsername2(request.getUsername());
-                        long company = asR.findCompanyByUser(id);
                         long asig = asR.findIdByUserName(request.getUsername());
                         return AuthResponse.builder()
                                         .token(token)
-                                        .user(id)
-                                        .company(company)
                                         .asig(asig)
                                         .build();
                 } catch (Exception ex) {
                         System.out.println(ex.getCause());
                         return AuthResponse.builder()
                                         .token(token)
-                                        .company(-1)
-                                        .user(-1)
                                         .asig(-1)
                                         .build();
                 }
@@ -59,8 +53,8 @@ public class AuthService {
                                 .password(passwordEncoder.encode(request.getPassword()))
                                 .firstname(request.getFirstname())
                                 .lastname(request.getLastname())
-                                .country(request.getCountry())
                                 .role(Role.USER)
+                                .hability(request.getHability())
                                 .build();
                 userRepository.save(user_);
 
@@ -75,7 +69,9 @@ public class AuthService {
                                 .password(passwordEncoder.encode(u.getPassword()))
                                 .firstname(u.getFirstname())
                                 .lastname(u.getLastname())
-                                .country(u.getCountry())
+                                .hability(u.getHability())
+                                .changePassword(u.getChangePassword())
+                                .changePasswordNextSession(u.getChangePasswordNextSession())
                                 .role(Role.USER)
                                 .build();
 

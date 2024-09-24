@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.private_endpoint.inputs.AnimalMovementData;
+import com.example.demo.private_endpoint.DTOs.AnimalMovementData;
 import com.example.demo.private_endpoint.modules.animal_module.services.AnimalInOutService;
 import com.example.demo.private_endpoint.views.CageMovementView;
 import com.example.demo.private_endpoint.views.Message;

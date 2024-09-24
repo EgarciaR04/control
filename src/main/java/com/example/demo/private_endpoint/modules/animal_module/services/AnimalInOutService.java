@@ -3,10 +3,11 @@ package com.example.demo.private_endpoint.modules.animal_module.services;
 import java.util.List;
 import java.util.ArrayList;
 
+import com.example.demo.private_endpoint.modules.animal_module.repositories.ConcentrateRepository;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 
-import com.example.demo.private_endpoint.inputs.AnimalMovementData;
+import com.example.demo.private_endpoint.DTOs.AnimalMovementData;
 import com.example.demo.private_endpoint.modules.animal_module.models.AnimalInOut;
 import com.example.demo.private_endpoint.modules.animal_module.models.options.AnimalInOutOptions;
 import com.example.demo.private_endpoint.modules.animal_module.repositories.AnimalRespository;
@@ -37,6 +38,7 @@ public class AnimalInOutService {
     private final FeedAnimalRepository fAnimalR;
     private final AnimalRespository aR;
     private final FeedConcentrateRepository fcR;
+    private final ConcentrateRepository cr;
 
     // dar de baja por muerte
     public Message animalDiedRegister(AnimalMovementData animal_input, long id_cage, long id_user) {
@@ -62,7 +64,7 @@ public class AnimalInOutService {
         asCMR.save(asig_cage_movement);
 
         // dar de baja al animal en el corral correspondiente
-        CageService cage_animal_died = new CageService(cageR, asR, aR, fAnimalR, fcR);
+        CageService cage_animal_died = new CageService(cageR, asR, aR, fAnimalR, fcR, cr);
 
         Message message = cage_animal_died.animalDied(id_cage);
 
@@ -88,7 +90,7 @@ public class AnimalInOutService {
 
         asCMR.save(asig_cage_movement);
 
-        CageService cage_animal_remove = new CageService(cageR, asR, aR, fAnimalR, fcR);
+        CageService cage_animal_remove = new CageService(cageR, asR, aR, fAnimalR, fcR, cr);
 
         Message message = cage_animal_remove.removeAnimal(id_cage);
 
@@ -119,7 +121,7 @@ public class AnimalInOutService {
             asCMR.save(asig_cage_movement);
         }
 
-        CageService cage_animals_remove = new CageService(cageR, asR, aR, fAnimalR, fcR);
+        CageService cage_animals_remove = new CageService(cageR, asR, aR, fAnimalR, fcR, cr);
 
         cage_animals_remove.removeAllAnimal(id_cage);
 

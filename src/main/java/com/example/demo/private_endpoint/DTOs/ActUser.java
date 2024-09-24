@@ -1,6 +1,4 @@
-package com.example.demo.private_endpoint.views;
-
-import com.example.demo.User.Role;
+package com.example.demo.private_endpoint.DTOs;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,15 +9,23 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserView {
-    private long id;
+public class ActUser {
     private String username;
     private String firstname;
     private String lastname;
     private String tel;
-    private Role role;
     private boolean hability;
     private boolean changePassword;
     private boolean changePasswordNextSession;
+
+    public boolean getHability() {
+        return this.hability;
+    }
+    public boolean getChangePassword() {
+        return this.changePassword;
+    }
+    public boolean getChangePasswordNextSession() {
+        return this.changePasswordNextSession;
+    }
 
 }

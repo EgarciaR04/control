@@ -3,10 +3,13 @@ package com.example.demo.private_endpoint.modules.cage_module.services;
 import java.util.List;
 import java.util.ArrayList;
 
+import com.example.demo.private_endpoint.DTOs.PutCage;
+import com.example.demo.private_endpoint.modules.animal_module.models.Concentrate;
+import com.example.demo.private_endpoint.modules.animal_module.repositories.ConcentrateRepository;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.private_endpoint.inputs.AsignCageAnimalData;
-import com.example.demo.private_endpoint.inputs.CageInput;
+import com.example.demo.private_endpoint.DTOs.AsignCageAnimalData;
+import com.example.demo.private_endpoint.DTOs.CageInput;
 import com.example.demo.private_endpoint.modules.animal_module.models.Animal;
 import com.example.demo.private_endpoint.modules.animal_module.repositories.AnimalRespository;
 import com.example.demo.private_endpoint.modules.cage_module.models.Cage;
@@ -31,6 +34,7 @@ public class CageService {
     private final AnimalRespository aR;
     private final FeedAnimalRepository faR;
     private final FeedConcentrateRepository fcR;
+    private final ConcentrateRepository cr;
 
     public Message saveCage(CageInput request) {
         Cage cage = new Cage();
@@ -69,6 +73,7 @@ public class CageService {
             Cage c = cages.get(i);
 
             CageView cv = new CageView();
+
             cv.setId(c.getId());
             cv.setUser(c.getUser().getId());
             cv.setCode(c.getCode());
@@ -77,7 +82,11 @@ public class CageService {
             cv.setObservations(c.getObservations());
             cv.setFeedconcentrate(c.getFeedConcentrate().getAmount());
             cv.setFeedanimal(c.getFeedAnimal().getAnimal_amount());
-
+            try {
+                cv.setConcentrate_name(c.getConcentrate().getConcentrate_name());
+            } catch (Exception e) {
+                cv.setConcentrate_name("Concentrado no ingresado");
+            }
             try {
                 cv.setAnimal_name(c.getAnimal().getAnimal_name());
             } catch (Exception ex) {
@@ -112,7 +121,7 @@ public class CageService {
         return cage_view;
     }
 
-    public CageView updateCageById(Cage request, long id) {
+    public Message updateCageById(PutCage request, long id) {
         Cage cage = cageRepository.findById(id).get();
 
         cage.setCode(request.getCode());
@@ -122,28 +131,40 @@ public class CageService {
 
         cageRepository.save(cage);
 
-        CageView cage_view = new CageView();
-        cage_view.setId(cage.getId());
-        cage_view.setUser(cage.getUser().getId());
-        cage_view.setCode(cage.getCode());
-        cage_view.setName(cage.getName());
-        cage_view.setActive(cage.getActive());
-        cage_view.setObservations(cage.getObservations());
+        Message message = new Message();
+        message.setMessage("Corral actualizado correctamente");
 
-        return cage_view;
+        return message;
+    }
+    // ASIG CONCENTRATE IN A CAGE
+    public Message asigConcentrate(long id_concentrate, long id_cage, long amount){
+        Cage cage = cageRepository.findById(id_cage).get();
+        Concentrate concentrate = cr.findById(id_concentrate).get();
+        FeedConcentrate feedConcentrate = new FeedConcentrate();
+
+        feedConcentrate.setAmount(amount);
+
+        cage.setConcentrate(concentrate);
+        cage.setFeedConcentrate(feedConcentrate);
+
+        Message message = new Message();
+        message.setMessage("Concentrado asignado correctamente");
+
+        cageRepository.save(cage);
+
+        return message;
     }
 
+
+    // ASIGN AND MOVEMENT OF ANIMAL IN A CAGE
     public Message asignCageAnimal(AsignCageAnimalData animal, long id_cage) {
         Cage cage = cageRepository.findById(id_cage).get();
 
         Animal a = aR.findAnimal(animal.getAnimal());
         FeedAnimal fa = cage.getFeedAnimal();
         fa.setAnimal_amount(animal.getAnimal_amount());
-        FeedConcentrate fc = cage.getFeedConcentrate();
-        fc.setAmount(animal.getConcentrate_amount());
 
         cage.setFeedAnimal(fa);
-        cage.setFeedConcentrate(fc);
         cage.setAnimal(a);
 
         cageRepository.save(cage);

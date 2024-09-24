@@ -14,5 +14,8 @@ public class RegisterRequest {
     String password;
     String firstname;
     String lastname;
-    String country;
+    boolean hability;
+    public boolean getHability(){
+        return this.hability;
+    }
 }

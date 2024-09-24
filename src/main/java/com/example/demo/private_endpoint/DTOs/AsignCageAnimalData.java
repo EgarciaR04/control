@@ -1,4 +1,4 @@
-package com.example.demo.private_endpoint.inputs;
+package com.example.demo.private_endpoint.DTOs;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,5 +12,4 @@ import lombok.NoArgsConstructor;
 public class AsignCageAnimalData {
     private long animal;
     private Integer animal_amount;
-    private float concentrate_amount;
 }
