@@ -3,6 +3,7 @@ package com.example.demo.private_endpoint.modules.animal_module.services;
 import java.util.List;
 import java.util.ArrayList;
 
+import com.example.demo.private_endpoint.DTOs.AnimalDTO;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.private_endpoint.modules.animal_module.models.Animal;
@@ -21,12 +22,16 @@ public class AnimalService {
     private final AnimalRespository animalRespository;
     private final AsignedRepository asr;
 
-    public Message saveAnimal(Animal request) {
-        UserAsigned user = request.getUser();
+    public Message saveAnimal(AnimalDTO request, long id_user) {
+        UserAsigned user = asr.findAsignedById(id_user);
+        Animal animal = new Animal();
 
-        request.setUser(asr.findAsignedById(user.getId()));
+        animal.setUser(user);
+        animal.setAnimal_name(request.getAnimal_name());
+        animal.setHability(request.isHability());
+        animal.setObservations(request.getObservations());
 
-        animalRespository.save(request);
+        animalRespository.save(animal);
 
         Message message = new Message();
         message.setMessage("Animal registrado correctamente");
@@ -70,24 +75,19 @@ public class AnimalService {
         return animals_view;
     }
 
-    public AnimalView updateAnimal(Animal request, long id) {
+    public Message updateAnimal(AnimalDTO request, long id) {
         Animal animal = animalRespository.findById(id).get();
 
         animal.setAnimal_name(request.getAnimal_name());
         animal.setObservations(request.getObservations());
-        animal.setHability(request.getHability());
+        animal.setHability(request.isHability());
 
         animalRespository.save(animal);
 
-        AnimalView animalv = new AnimalView();
-        animalv.setId(animal.getId());
-        animalv.setId_user(animal.getUser().getId());
-        animalv.setAnimal_name(request.getAnimal_name());
-        animalv.setObservations(request.getObservations());
-        animalv.setHability(request.getHability());
+        Message message = new Message();
+        message.setMessage("Animal actualizado");
 
-        return animalv;
+        return message;
 
     }
-
 }
