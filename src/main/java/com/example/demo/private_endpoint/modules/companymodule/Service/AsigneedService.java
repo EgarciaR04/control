@@ -75,9 +75,6 @@ public class AsigneedService {
             user.setRole(Role.ADMIN);
         }
 
-        System.out.println(request);
-
-
         userAsigned.setCompany(company);
         userAsigned.setUser(auth.resgiterUserByUser(user));
 
@@ -89,6 +86,28 @@ public class AsigneedService {
         asignedRepository.save(userAsigned);
 
         return message;
+    }
+
+    public void CrateFirstUser(CreateUser request){
+        Company company = companyRepository.findCompanyCustom(request.getId_asig());
+
+        User_ user = new User_();
+        UserAsigned userAsigned = new UserAsigned();
+
+        user.setUsername(request.getUsername() + "@" +company.getUsernameExtension());
+        user.setPassword(request.getPassword());
+        user.setFirstname(request.getFirstname());
+        user.setLastname(request.getLastname());
+        user.setTel(request.getTel());
+        user.setHability(request.getHability());
+        user.setChangePassword(request.getChangePassword());
+        user.setChangePasswordNextSession(request.getChangePasswordNextSession());
+        user.setRole(Role.ADMIN);
+
+        userAsigned.setCompany(company);
+        userAsigned.setUser(auth.resgiterUserByUser(user));
+
+        asignedRepository.save(userAsigned);
     }
 
 }

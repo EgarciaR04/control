@@ -2,6 +2,7 @@ package com.example.demo.private_endpoint.modules.companymodule.Controllers;
 
 import java.util.Optional;
 
+import com.example.demo.private_endpoint.views.Message;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.private_endpoint.modules.companymodule.Models.Company;
@@ -23,7 +24,7 @@ public class CompanyController {
     }
 
     @PostMapping(path = "/create")
-    public Company saveCompany(@RequestBody Company request) {
+    public long saveCompany(@RequestBody Company request) {
         return this.companyService.saveCompany(request);
     }
 

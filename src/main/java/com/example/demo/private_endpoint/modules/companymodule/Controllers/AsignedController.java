@@ -30,4 +30,10 @@ public class AsignedController {
     public Message saveAsigned(@Validated @RequestBody CreateUser request) {
         return this.asigneedService.saveAsigned(request);
     }
+
+    @PostMapping(path = "/create/first")
+    public void saveFirstUser(@RequestBody CreateUser request){
+        this.asigneedService.CrateFirstUser(request);
+    }
+
 }

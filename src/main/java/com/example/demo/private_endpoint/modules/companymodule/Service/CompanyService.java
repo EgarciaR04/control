@@ -1,6 +1,8 @@
 package com.example.demo.private_endpoint.modules.companymodule.Service;
 
+import com.example.demo.private_endpoint.DTOs.CreateUser;
 import com.example.demo.private_endpoint.exeptions.ResourceNotFoundException;
+import com.example.demo.private_endpoint.views.Message;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.private_endpoint.modules.companymodule.Models.Company;
@@ -20,8 +22,8 @@ public class CompanyService {
                 .orElseThrow(ResourceNotFoundException::new);
     }
 
-    public Company saveCompany(Company request) {
-        return companyRepository.save(request);
+    public long saveCompany(Company request) {
+        return companyRepository.save(request).getId();
     }
 
     public Company updateCompanyById(Company request, long id) {
