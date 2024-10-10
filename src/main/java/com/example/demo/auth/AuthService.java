@@ -72,7 +72,7 @@ public class AuthService {
                                 .hability(u.getHability())
                                 .changePassword(u.getChangePassword())
                                 .changePasswordNextSession(u.getChangePasswordNextSession())
-                                .role(Role.USER)
+                                .role(u.getRole())
                                 .build();
 
                 userRepository.save(user);

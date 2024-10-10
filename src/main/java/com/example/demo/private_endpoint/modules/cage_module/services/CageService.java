@@ -3,13 +3,11 @@ package com.example.demo.private_endpoint.modules.cage_module.services;
 import java.util.List;
 import java.util.ArrayList;
 
-import com.example.demo.private_endpoint.DTOs.PutCage;
+import com.example.demo.private_endpoint.DTOs.*;
 import com.example.demo.private_endpoint.modules.animal_module.models.Concentrate;
 import com.example.demo.private_endpoint.modules.animal_module.repositories.ConcentrateRepository;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.private_endpoint.DTOs.AsignCageAnimalData;
-import com.example.demo.private_endpoint.DTOs.CageInput;
 import com.example.demo.private_endpoint.modules.animal_module.models.Animal;
 import com.example.demo.private_endpoint.modules.animal_module.repositories.AnimalRespository;
 import com.example.demo.private_endpoint.modules.cage_module.models.Cage;
@@ -36,7 +34,7 @@ public class CageService {
     private final FeedConcentrateRepository fcR;
     private final ConcentrateRepository cr;
 
-    public Message saveCage(CageInput request) {
+    public CageView saveCage(CageInput request) {
         Cage cage = new Cage();
 
         FeedAnimal feedAnimal = new FeedAnimal();
@@ -55,11 +53,21 @@ public class CageService {
 
         cageRepository.save(cage);
 
-        Message message = new Message();
+        CageView cv = new CageView();
 
-        message.setMessage("Corral creado exitosamente");
+        AnimalAsigned animalAsigned = new AnimalAsigned();
+        ConcentrateAsigned concentrateAsigned = new ConcentrateAsigned();
 
-        return message;
+        cv.setId(cage.getId());
+        cv.setUser(cage.getUser().getId());
+        cv.setCode(cage.getCode());
+        cv.setName(cage.getName());
+        cv.setActive(cage.getActive());
+        cv.setObservations(cage.getObservations());
+        cv.setAnimalAsigned(null);
+        cv.setConcentrateAsigned(null);
+
+        return cv;
     }
 
     public List<CageView> findAllCageInCompany(long id_user) {
@@ -73,6 +81,8 @@ public class CageService {
             Cage c = cages.get(i);
 
             CageView cv = new CageView();
+            AnimalAsigned animalAsigned = new AnimalAsigned();
+            ConcentrateAsigned concentrateAsigned = new ConcentrateAsigned();
 
             cv.setId(c.getId());
             cv.setUser(c.getUser().getId());
@@ -80,18 +90,32 @@ public class CageService {
             cv.setName(c.getName());
             cv.setActive(c.getActive());
             cv.setObservations(c.getObservations());
-            cv.setFeedconcentrate(c.getFeedConcentrate().getAmount());
-            cv.setFeedanimal(c.getFeedAnimal().getAnimal_amount());
+
+            // establecer animal asignado
+            try{
+                animalAsigned.setAnimalId(c.getAnimal().getId());
+                animalAsigned.setAnimalName(c.getAnimal().getAnimal_name());
+                animalAsigned.setAnimalAmount(c.getFeedAnimal().getAnimal_amount());
+            }catch (Exception exception){
+                animalAsigned.setAnimalId(0);
+                animalAsigned.setAnimalName("Animal no asignado");
+                animalAsigned.setAnimalAmount(0);
+            }
+
+            // establecer concentrado asignado
             try {
-                cv.setConcentrate_name(c.getConcentrate().getConcentrate_name());
+                concentrateAsigned.setConcentrateName(c.getConcentrate().getConcentrate_name());
+                concentrateAsigned.setConcentrateId(c.getConcentrate().getId());
+                concentrateAsigned.setConcentrateAmount(c.getFeedConcentrate().getAmount());
             } catch (Exception e) {
-                cv.setConcentrate_name("Concentrado no ingresado");
+                concentrateAsigned.setConcentrateName("Concentrado no asignado");
+                concentrateAsigned.setConcentrateId(0);
+                concentrateAsigned.setConcentrateAmount(0);
             }
-            try {
-                cv.setAnimal_name(c.getAnimal().getAnimal_name());
-            } catch (Exception ex) {
-                cv.setAnimal_name("Animal no ingresado");
-            }
+
+            // colocar valores asignados
+            cv.setConcentrateAsigned(concentrateAsigned);
+            cv.setAnimalAsigned(animalAsigned);
 
             cage_view.add(cv);
         }
@@ -103,20 +127,41 @@ public class CageService {
         Cage cage = cageRepository.findById(id).get();
 
         CageView cage_view = new CageView();
+        AnimalAsigned animalAsigned = new AnimalAsigned();
+        ConcentrateAsigned concentrateAsigned = new ConcentrateAsigned();
+
         cage_view.setId(cage.getId());
         cage_view.setUser(cage.getUser().getId());
         cage_view.setCode(cage.getCode());
         cage_view.setName(cage.getName());
         cage_view.setActive(cage.getActive());
         cage_view.setObservations(cage.getObservations());
-        cage_view.setFeedconcentrate(cage.getFeedConcentrate().getAmount());
-        cage_view.setFeedanimal(cage.getFeedAnimal().getAnimal_amount());
 
-        try {
-            cage_view.setAnimal_name(cage.getAnimal().getAnimal_name());
-        } catch (Exception ex) {
-            cage_view.setAnimal_name("Animal no ingresado");
+        // establecer animal asignado
+        try{
+            animalAsigned.setAnimalId(cage.getAnimal().getId());
+            animalAsigned.setAnimalName(cage.getAnimal().getAnimal_name());
+            animalAsigned.setAnimalAmount(cage.getFeedAnimal().getAnimal_amount());
+        }catch (Exception exception){
+            animalAsigned.setAnimalId(0);
+            animalAsigned.setAnimalName("Animal no asignado");
+            animalAsigned.setAnimalAmount(0);
         }
+
+        // establecer concentrado asignado
+        try {
+            concentrateAsigned.setConcentrateName(cage.getConcentrate().getConcentrate_name());
+            concentrateAsigned.setConcentrateId(cage.getConcentrate().getId());
+            concentrateAsigned.setConcentrateAmount(cage.getFeedConcentrate().getAmount());
+        } catch (Exception e) {
+            concentrateAsigned.setConcentrateName("Concentrado no asignado");
+            concentrateAsigned.setConcentrateId(0);
+            concentrateAsigned.setConcentrateAmount(0);
+        }
+
+        // colocar valores asignados
+        cage_view.setConcentrateAsigned(concentrateAsigned);
+        cage_view.setAnimalAsigned(animalAsigned);
 
         return cage_view;
     }
@@ -220,5 +265,4 @@ public class CageService {
         fcR.save(concentrate_amount);
         faR.save(animal_amount);
     }
-
 }

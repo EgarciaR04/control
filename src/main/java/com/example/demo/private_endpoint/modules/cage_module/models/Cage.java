@@ -28,7 +28,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "corral", uniqueConstraints = { @UniqueConstraint(columnNames = { "code" }) }, schema = "tabla")
+@Table(name = "corral")
 public class Cage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

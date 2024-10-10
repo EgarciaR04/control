@@ -22,7 +22,7 @@ public class CageController {
     private final CageService cageService;
 
     @PostMapping(path = "/create")
-    public Message saveCage(@RequestBody CageInput request) {
+    public CageView saveCage(@RequestBody CageInput request) {
         return this.cageService.saveCage(request);
     }
 
@@ -41,9 +41,9 @@ public class CageController {
         return this.cageService.updateCageById(request, id);
     }
 
-    @PatchMapping(path = "{id}/animal/set")
-    public Message setAnimal(@RequestBody AsignCageAnimalData animal, @PathVariable long id) {
-        return this.cageService.asignCageAnimal(animal, id);
+    @PatchMapping(path = "{id_cage}/animal/set")
+    public Message setAnimal(@RequestBody AsignCageAnimalData animal, @PathVariable long id_cage) {
+        return this.cageService.asignCageAnimal(animal, id_cage);
     }
 
     @PatchMapping(path = "{id_cage}/cage/{id_concentrate}/concentrate/asig/{amount}")

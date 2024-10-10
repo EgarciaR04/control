@@ -3,6 +3,7 @@ package com.example.demo.private_endpoint.modules.companymodule.Service;
 import java.util.List;
 import java.util.ArrayList;
 
+import com.example.demo.User.Role;
 import com.example.demo.private_endpoint.DTOs.CreateUser;
 import com.example.demo.private_endpoint.modules.companymodule.Repositories.CompanyRepository;
 import org.springframework.stereotype.Service;
@@ -67,6 +68,14 @@ public class AsigneedService {
         user.setHability(request.getHability());
         user.setChangePassword(request.getChangePassword());
         user.setChangePasswordNextSession(request.getChangePasswordNextSession());
+        if(request.getRole() == 0){
+            user.setRole(Role.USER);
+        }
+        else {
+            user.setRole(Role.ADMIN);
+        }
+
+        System.out.println(request);
 
 
         userAsigned.setCompany(company);

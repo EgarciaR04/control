@@ -1,5 +1,6 @@
 package com.example.demo.private_endpoint.DTOs;
 
+import com.example.demo.User.Role;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,6 +22,7 @@ public class CreateUser {
     private String firstname;
     @NotNull
     private String lastname;
+    private int role;
     private String tel;
     private boolean hability;
     private boolean changePassword;
