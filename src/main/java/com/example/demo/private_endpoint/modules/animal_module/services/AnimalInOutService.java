@@ -53,7 +53,7 @@ public class AnimalInOutService {
 
         // datos asignados automaticamente
         animal.setMovement_date(LocalDateTime.now());
-        animal.setOption(AnimalInOutOptions.Muerte);
+        animal.setType(AnimalInOutOptions.Muerte);
 
         UserAsigned user = asR.findAsignedById(id_user);
         animal.setUser(user);
@@ -82,7 +82,7 @@ public class AnimalInOutService {
 
         // asignados automaticamente
         animal_data.setMovement_date(LocalDateTime.now());
-        animal_data.setOption(AnimalInOutOptions.Salida);
+        animal_data.setType(AnimalInOutOptions.Salida);
         animal_data.setUser(asR.findAsignedById(id_user));
 
         asig_cage_movement.setAnimal_movement(animal_data);
@@ -112,7 +112,7 @@ public class AnimalInOutService {
             animal_movement.setWeight(animal_movement_input.getWeight());
 
             animal_movement.setUser(asR.findAsignedById(id_user));
-            animal_movement.setOption(AnimalInOutOptions.Salida);
+            animal_movement.setType(AnimalInOutOptions.Salida);
             animal_movement.setMovement_date(LocalDateTime.now());
 
             asig_cage_movement.setAnimal_movement(animal_movement);
@@ -145,7 +145,7 @@ public class AnimalInOutService {
             CageMovementView report_view = new CageMovementView();
 
             report_view.setCage_code(report.getCage().getCode());
-            report_view.setMovement_option(report.getAnimal_movement().getOption());
+            report_view.setMovement_option(report.getAnimal_movement().getType());
             report_view.setTime(report.getAnimal_movement().getMovement_date());
             report_view.setUser_username(report.getAnimal_movement().getUser().getUser().getUsername());
 

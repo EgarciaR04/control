@@ -44,6 +44,6 @@ public class AnimalInOut {
     private float age;
 
     @Enumerated(EnumType.STRING)
-    private AnimalInOutOptions option;
+    private AnimalInOutOptions type;
 
 }

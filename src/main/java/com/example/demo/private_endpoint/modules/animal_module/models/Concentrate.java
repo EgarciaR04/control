@@ -27,7 +27,7 @@ public class Concentrate {
 
     @NotNull
     private String concentrate_name;
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String observations;
     private boolean hablity;
 
