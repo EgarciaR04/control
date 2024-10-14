@@ -1,5 +1,6 @@
 package com.example.demo.private_endpoint.modules.animal_module.services;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -20,7 +21,7 @@ import com.example.demo.private_endpoint.modules.cage_module.repositories.FeedCo
 import com.example.demo.private_endpoint.modules.cage_module.services.CageService;
 import com.example.demo.private_endpoint.modules.companymodule.Models.UserAsigned;
 import com.example.demo.private_endpoint.modules.companymodule.Repositories.AsignedRepository;
-import com.example.demo.private_endpoint.views.CageMovementView;
+import com.example.demo.private_endpoint.views.CageAnimalMovementView;
 import com.example.demo.private_endpoint.views.Message;
 
 import lombok.RequiredArgsConstructor;
@@ -131,23 +132,32 @@ public class AnimalInOutService {
         return message;
     }
 
-    public List<CageMovementView> reportAnimalInOut(long asig) {
+    public List<CageAnimalMovementView> reportAnimalInOut(long asig) {
         UserAsigned user = asR.findAsignedById(asig);
 
         List<AsigCageMovement> report_animals = asCMR.findReportCageMovementByCompanyId(
                 user.getCompany().getId());
 
-        List<CageMovementView> report_animals_view = new ArrayList<>();
+        List<CageAnimalMovementView> report_animals_view = new ArrayList<>();
 
         for (int i = 0; i < report_animals.size(); i++) {
             AsigCageMovement report = report_animals.get(i);
 
-            CageMovementView report_view = new CageMovementView();
+            CageAnimalMovementView report_view = new CageAnimalMovementView();
 
             report_view.setCage_code(report.getCage().getCode());
             report_view.setMovement_option(report.getAnimal_movement().getType());
-            report_view.setTime(report.getAnimal_movement().getMovement_date());
-            report_view.setUser_username(report.getAnimal_movement().getUser().getUser().getUsername());
+            report_view.setUser_username(report.getAnimal_movement().getUser().getUser().getFirstname());
+            report_view.setCage_name(report.getCage().getName());
+            report_view.setWeigth(report.getAnimal_movement().getWeight());
+            report_view.setAge(report.getAnimal_movement().getAge());
+            report_view.setAnimal_type(report.getCage().getAnimal().getAnimal_name());
+
+
+            // formatear la fecha para tenerla mas comoda a la vista
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+
+            report_view.setTime(report.getAnimal_movement().getMovement_date().format(formatter));
 
             report_animals_view.add(report_view);
         }

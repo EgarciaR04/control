@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.private_endpoint.DTOs.AnimalMovementData;
 import com.example.demo.private_endpoint.modules.animal_module.services.AnimalInOutService;
-import com.example.demo.private_endpoint.views.CageMovementView;
+import com.example.demo.private_endpoint.views.CageAnimalMovementView;
 import com.example.demo.private_endpoint.views.Message;
 
 import lombok.RequiredArgsConstructor;
@@ -48,8 +48,8 @@ public class AnimalInOutController {
         return this.animalInOutService.removeAllAnimalRegister(animal_input, id_cage, id_asig);
     }
 
-    @GetMapping(path = "/search/{id_asig}/company")
-    public List<CageMovementView> reportInOutAnimal(@PathVariable long id_asig) {
+    @GetMapping(path = "search/{id_asig}/company")
+    public List<CageAnimalMovementView> reportInOutAnimal(@PathVariable long id_asig) {
         return this.animalInOutService.reportAnimalInOut(id_asig);
     }
 
