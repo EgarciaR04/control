@@ -41,6 +41,30 @@ public class AnimalInOutService {
     private final FeedConcentrateRepository fcR;
     private final ConcentrateRepository cr;
 
+    public Message setAnAnimalInCage(long id_cage, long id_user, int amount) {
+
+        Cage cage_used = cR.findById(id_cage).get();
+        AnimalInOut animal = new AnimalInOut();
+        AsigCageMovement asig_cage_movement = new AsigCageMovement();
+        UserAsigned user = asR.findAsignedById(id_user);
+
+        // datos asignado automaticamente
+        animal.setMovement_date(LocalDateTime.now());
+        animal.setType(AnimalInOutOptions.Entrada);
+
+        animal.setUser(user);
+
+        asig_cage_movement.setAnimal_movement(animal);
+        asig_cage_movement.setCage(cage_used);
+
+        CageService cage_set_animal = new CageService(cageR, asR, aR, fAnimalR, fcR, cr);
+
+
+        asCMR.save(asig_cage_movement);
+
+        return cage_set_animal.setNewAnimals(id_cage, amount);
+    }
+
     // dar de baja por muerte
     public Message animalDiedRegister(AnimalMovementData animal_input, long id_cage, long id_user) {
 
@@ -126,7 +150,7 @@ public class AnimalInOutService {
 
         cage_animals_remove.removeAllAnimal(id_cage);
 
-        Message message = new Message();
+        Message message = new Message("");
         message.setMessage("Se han sacado a todos los animales del corral");
 
         return message;

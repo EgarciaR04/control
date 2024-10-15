@@ -28,18 +28,20 @@ public class AnimalInOutController {
     @PostMapping(path = "/register/remove/{id_asig}/user/{id_cage}/cage/{type_of_movement}")
     public Message removeAnimal(@RequestBody AnimalMovementData animal_input, @PathVariable long id_asig,
             @PathVariable long id_cage, @PathVariable long type_of_movement) {
-        if (type_of_movement == 0) {
-            // regitrar ingreso
-        }
-        else if (type_of_movement == 1) {
+        if (type_of_movement == 1) {
             return this.animalInOutService.removeAnAnimalRegister(animal_input, id_cage, id_asig);
         }
         else if (type_of_movement == 2) {
             return this.animalInOutService.animalDiedRegister(animal_input, id_cage, id_asig);
         }
-        Message message = new Message();
+        Message message = new Message("");
         message.setMessage("Movimiento no identificado");
         return message;
+    }
+
+    @PostMapping(path = "/set/animals/{id_asig}/user/{id_cage}/cage/{amount}/amount")
+    public Message addAnimals(@PathVariable long id_asig, @PathVariable long id_cage, @PathVariable int amount){
+        return this.animalInOutService.setAnAnimalInCage(id_cage, id_asig, amount);
     }
 
     @PostMapping(path = "register/remove/all/{id_asig}/user/{id_cage}")
@@ -47,10 +49,4 @@ public class AnimalInOutController {
             @PathVariable long id_cage) {
         return this.animalInOutService.removeAllAnimalRegister(animal_input, id_cage, id_asig);
     }
-
-    @GetMapping(path = "search/{id_asig}/company")
-    public List<CageAnimalMovementView> reportInOutAnimal(@PathVariable long id_asig) {
-        return this.animalInOutService.reportAnimalInOut(id_asig);
-    }
-
 }

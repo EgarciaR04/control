@@ -52,7 +52,7 @@ public class ConcentrateService {
 
         concentrateRepository.save(concentrate);
 
-        Message message = new Message();
+        Message message = new Message("");
         message.setMessage("Concentrado agregado");
 
         return message;
@@ -67,7 +67,7 @@ public class ConcentrateService {
 
         concentrateRepository.save(concentrate);
 
-        Message message = new Message();
+        Message message = new Message("");
         message.setMessage("Concentrado actualizado");
 
         return message;

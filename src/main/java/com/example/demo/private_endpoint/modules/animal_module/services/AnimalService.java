@@ -33,7 +33,7 @@ public class AnimalService {
 
         animalRespository.save(animal);
 
-        Message message = new Message();
+        Message message = new Message("");
         message.setMessage("Animal registrado correctamente");
 
         return message;
@@ -84,7 +84,7 @@ public class AnimalService {
 
         animalRespository.save(animal);
 
-        Message message = new Message();
+        Message message = new Message("");
         message.setMessage("Animal actualizado");
 
         return message;

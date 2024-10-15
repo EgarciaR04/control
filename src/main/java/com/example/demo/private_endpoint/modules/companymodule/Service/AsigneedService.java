@@ -79,7 +79,7 @@ public class AsigneedService {
         userAsigned.setUser(auth.resgiterUserByUser(user));
 
 
-        Message message = new Message();
+        Message message = new Message("");
 
         message.setMessage("Usuario creado correctamente");
 

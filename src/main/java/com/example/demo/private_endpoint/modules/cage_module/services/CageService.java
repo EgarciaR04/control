@@ -176,7 +176,7 @@ public class CageService {
 
         cageRepository.save(cage);
 
-        Message message = new Message();
+        Message message = new Message("");
         message.setMessage("Corral actualizado correctamente");
 
         return message;
@@ -192,7 +192,7 @@ public class CageService {
         cage.setConcentrate(concentrate);
         cage.setFeedConcentrate(feedConcentrate);
 
-        Message message = new Message();
+        Message message = new Message("");
         message.setMessage("Concentrado asignado correctamente");
 
         cageRepository.save(cage);
@@ -214,10 +214,22 @@ public class CageService {
 
         cageRepository.save(cage);
 
-        Message message = new Message();
+        Message message = new Message("");
         message.setMessage("Animal asignado correctamente");
 
         return message;
+    }
+
+    public Message setNewAnimals(long id_cage, int amount_animals) {
+        Cage cage = cageRepository.findById(id_cage).get();
+
+        FeedAnimal animal_amount = faR.findById(cage.getFeedAnimal().getId()).get();
+
+        animal_amount.setAnimal_amount(animal_amount.getAnimal_amount() + amount_animals);
+
+        faR.save(animal_amount);
+
+        return new Message("Se han agregado " + amount_animals + " animales");
     }
 
     public Message animalDied(long id) {
@@ -229,7 +241,7 @@ public class CageService {
 
         faR.save(animal_amount);
 
-        Message message = new Message();
+        Message message = new Message("");
 
         message.setMessage("Se ha dado de baja a un animal");
 
@@ -246,7 +258,7 @@ public class CageService {
 
         faR.save(animal_amount);
 
-        Message message = new Message();
+        Message message = new Message("");
 
         message.setMessage("Se ha registrado la salida del animal");
 

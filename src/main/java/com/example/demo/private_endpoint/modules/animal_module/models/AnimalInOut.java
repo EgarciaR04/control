@@ -38,6 +38,7 @@ public class AnimalInOut {
 
     private LocalDateTime movement_date;
 
+    @Column(nullable = true)
     private float weight;
 
     @Column(nullable = true)

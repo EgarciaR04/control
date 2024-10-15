@@ -63,7 +63,7 @@ public class UserService {
 
         userRepository.save(user);
 
-        Message message = new Message();
+        Message message = new Message("");
         message.setMessage("Usuario actualizado correctamente");
 
         return message;
@@ -75,7 +75,7 @@ public class UserService {
 
         userRepository.save(user);
 
-        Message message = new Message();
+        Message message = new Message("");
         message.setMessage("Contraseña actualizada correctamente");
 
         return  message;
