@@ -277,4 +277,26 @@ public class CageService {
         fcR.save(concentrate_amount);
         faR.save(animal_amount);
     }
+
+    public Message addAnimalFood(long id_cage, float amount){
+        Cage cage = cageRepository.findById(id_cage).get();
+        FeedConcentrate animal_food = fcR.findById(cage.getFeedConcentrate().getId()).get();
+
+        animal_food.setAmount(cage.getFeedConcentrate().getAmount() + amount);
+
+        fcR.save(animal_food);
+
+        return new Message("Se ha agregado " + amount + " libras de concentrado");
+    }
+
+    public Message removeAnimalFood(long id_cage, float amount){
+        Cage cage = cageRepository.findById(id_cage).get();
+        FeedConcentrate animal_food = fcR.findById(cage.getFeedConcentrate().getId()).get();
+
+        animal_food.setAmount(cage.getFeedConcentrate().getAmount() - amount);
+
+        fcR.save(animal_food);
+
+        return new Message("Se ha eliminado " + amount + " libras de concentrado");
+    }
 }

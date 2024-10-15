@@ -10,6 +10,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Data
 @Builder
@@ -24,7 +26,6 @@ public class AnimalFoodInOut {
 
     @Column(nullable = false, name = "tipo_de_movimiento")
     @NotNull(message = "el tipo de movimiento no puede ser null")
-    @NotBlank(message = "Se necesita un dato, no en blanco")
     private AnimalFoodInOutOptions type;
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -35,4 +36,7 @@ public class AnimalFoodInOut {
     @Column(nullable = false, name = "cantidad")
     @NotNull(message = "la cantidad no puede ser nula")
     private float amount;
+
+    @Column(nullable = false, name = "fecha_movimiento")
+    private LocalDateTime dateTime;
 }

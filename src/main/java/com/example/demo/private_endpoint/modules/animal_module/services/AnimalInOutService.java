@@ -12,9 +12,9 @@ import com.example.demo.private_endpoint.DTOs.AnimalMovementData;
 import com.example.demo.private_endpoint.modules.animal_module.models.AnimalInOut;
 import com.example.demo.private_endpoint.modules.animal_module.models.options.AnimalInOutOptions;
 import com.example.demo.private_endpoint.modules.animal_module.repositories.AnimalRespository;
-import com.example.demo.private_endpoint.modules.cage_module.models.AsigCageMovement;
+import com.example.demo.private_endpoint.modules.cage_module.models.AsigAnimalCageMovement;
 import com.example.demo.private_endpoint.modules.cage_module.models.Cage;
-import com.example.demo.private_endpoint.modules.cage_module.repositories.AsigCageMovementRepository;
+import com.example.demo.private_endpoint.modules.cage_module.repositories.AsigAnimalCageMovementRepository;
 import com.example.demo.private_endpoint.modules.cage_module.repositories.CageRepository;
 import com.example.demo.private_endpoint.modules.cage_module.repositories.FeedAnimalRepository;
 import com.example.demo.private_endpoint.modules.cage_module.repositories.FeedConcentrateRepository;
@@ -32,7 +32,7 @@ public class AnimalInOutService {
 
     private final AsignedRepository asR;
     private final CageRepository cR;
-    private final AsigCageMovementRepository asCMR;
+    private final AsigAnimalCageMovementRepository asCMR;
 
     // usados para el registro de la muerte
     private final CageRepository cageR;
@@ -45,7 +45,7 @@ public class AnimalInOutService {
 
         Cage cage_used = cR.findById(id_cage).get();
         AnimalInOut animal = new AnimalInOut();
-        AsigCageMovement asig_cage_movement = new AsigCageMovement();
+        AsigAnimalCageMovement asig_cage_movement = new AsigAnimalCageMovement();
         UserAsigned user = asR.findAsignedById(id_user);
 
         // datos asignado automaticamente
@@ -70,7 +70,7 @@ public class AnimalInOutService {
 
         Cage cage_used = cR.findById(id_cage).get();
         AnimalInOut animal = new AnimalInOut();
-        AsigCageMovement asig_cage_movement = new AsigCageMovement();
+        AsigAnimalCageMovement asig_cage_movement = new AsigAnimalCageMovement();
 
         // datos dados por el usuario
         animal.setAge(animal_input.getAge());
@@ -100,7 +100,7 @@ public class AnimalInOutService {
     public Message removeAnAnimalRegister(AnimalMovementData animal_input, long id_cage, long id_user) {
         AnimalInOut animal_data = new AnimalInOut();
         Cage cage_used = cR.findById(id_cage).get();
-        AsigCageMovement asig_cage_movement = new AsigCageMovement();
+        AsigAnimalCageMovement asig_cage_movement = new AsigAnimalCageMovement();
 
         animal_data.setAge(animal_input.getAge());
         animal_data.setWeight(animal_input.getWeight());
@@ -129,7 +129,7 @@ public class AnimalInOutService {
 
         for (int i = 0; i < animal_input.size(); i++) {
             AnimalInOut animal_movement = new AnimalInOut();
-            AsigCageMovement asig_cage_movement = new AsigCageMovement();
+            AsigAnimalCageMovement asig_cage_movement = new AsigAnimalCageMovement();
 
             AnimalMovementData animal_movement_input = animal_input.get(i);
 
@@ -159,13 +159,13 @@ public class AnimalInOutService {
     public List<CageAnimalMovementView> reportAnimalInOut(long asig) {
         UserAsigned user = asR.findAsignedById(asig);
 
-        List<AsigCageMovement> report_animals = asCMR.findReportCageMovementByCompanyId(
+        List<AsigAnimalCageMovement> report_animals = asCMR.findReportCageMovementByCompanyId(
                 user.getCompany().getId());
 
         List<CageAnimalMovementView> report_animals_view = new ArrayList<>();
 
         for (int i = 0; i < report_animals.size(); i++) {
-            AsigCageMovement report = report_animals.get(i);
+            AsigAnimalCageMovement report = report_animals.get(i);
 
             CageAnimalMovementView report_view = new CageAnimalMovementView();
 
