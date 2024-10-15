@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "asig_movimientos_corral", uniqueConstraints = { @UniqueConstraint(columnNames = { "animal_movement" }) })
+@Table(name = "asig_movimientos_corral")
 public class AsigAnimalCageMovement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

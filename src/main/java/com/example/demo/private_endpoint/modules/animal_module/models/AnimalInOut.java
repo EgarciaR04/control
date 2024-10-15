@@ -44,6 +44,9 @@ public class AnimalInOut {
     @Column(nullable = true)
     private float age;
 
+    @Column(nullable = true)
+    private float amount_animals;
+
     @Enumerated(EnumType.STRING)
     private AnimalInOutOptions type;
 

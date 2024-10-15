@@ -52,6 +52,8 @@ public class AnimalInOutService {
         animal.setMovement_date(LocalDateTime.now());
         animal.setType(AnimalInOutOptions.Entrada);
 
+        animal.setAmount_animals(Float.parseFloat(String.valueOf(amount)));
+
         animal.setUser(user);
 
         asig_cage_movement.setAnimal_movement(animal);

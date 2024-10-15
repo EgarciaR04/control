@@ -33,6 +33,7 @@ public class ReportService {
             MovementView report = new MovementView();
 
             report.setUser_name(report_animal.getAnimal_movement().getUser().getUser().getFirstname());
+            report.setAmount(report_animal.getAnimal_movement().getAmount_animals());
             report.setCage_code(report_animal.getCage().getCode());
             report.setCage_name(report_animal.getCage().getName());
             report.setMovement_type(report_animal.getAnimal_movement().getType().toString());
