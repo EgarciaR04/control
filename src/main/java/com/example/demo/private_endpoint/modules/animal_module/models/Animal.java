@@ -12,6 +12,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,9 +35,16 @@ public class Animal {
     @JoinColumn(name = "id_user")
     private UserAsigned user;
 
+    @Column(nullable = false)
+    @NotNull(message = "nombre de animal no valido")
     private String animal_name;
+
     @Column(nullable = true)
+    @Size(max = 100)
     private String observations;
+
+    @Column(nullable = false)
+    @NotNull(message = "valor de hablitado invalido")
     private boolean hability;
 
     public boolean getHability() {

@@ -16,6 +16,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -34,8 +35,10 @@ public class AnimalInOut {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_user")
+    @NotNull(message = "usuario invalido")
     private UserAsigned user;
 
+    @Column(nullable = false)
     private LocalDateTime movement_date;
 
     @Column(nullable = true)
@@ -48,6 +51,7 @@ public class AnimalInOut {
     private float amount_animals;
 
     @Enumerated(EnumType.STRING)
+    @NotNull(message = "tipo de movimiento invalido")
     private AnimalInOutOptions type;
 
 }

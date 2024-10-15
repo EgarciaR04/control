@@ -1,11 +1,7 @@
 package com.example.demo.private_endpoint.modules.cage_module.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,12 +12,13 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "cantidad_de_animales", uniqueConstraints = { @UniqueConstraint(columnNames = { "cage" }) })
+@Table(name = "cantidad_de_animales")
 public class FeedAnimal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Min(0)
     private Integer animal_amount;
 
 }

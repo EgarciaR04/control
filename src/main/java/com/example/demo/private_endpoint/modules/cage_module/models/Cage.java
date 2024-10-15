@@ -18,6 +18,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -55,10 +57,22 @@ public class Cage {
     @JoinColumn(name = "id_concentrate")
     private Concentrate concentrate;
 
+    @Column(nullable = false)
+    @NotNull()
+    @Size(max = 10)
     private String code;
+
+    @Column(nullable = false)
+    @NotNull
+    @Size(max = 25)
     private String name;
+
+    @Column(nullable = false)
+    @NotNull
     private boolean active;
+
     @Column(nullable = true)
+    @Size(max = 100)
     private String observations;
 
     public boolean getActive() {

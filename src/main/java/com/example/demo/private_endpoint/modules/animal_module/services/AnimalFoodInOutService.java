@@ -47,6 +47,14 @@ public class AnimalFoodInOutService {
 
     public Message removeAnimalFoodInCage(long id_cage, long id_asig, float amount){
         Cage cage_used = cageRepository.findById(id_cage).get();
+
+        if (cage_used.getFeedConcentrate().getAmount() <= 0){
+            return new Message("No puedes eliminar mas concentrados");
+        }
+        else if (cage_used.getFeedConcentrate().getAmount() < amount) {
+            return new Message("La cantidad es mayor que lo que hay en el corral");
+        }
+
         AnimalFoodInOut animalfood = new AnimalFoodInOut();
         AsigAnimalFoodCageMovement asig_cage_movement = new AsigAnimalFoodCageMovement();
         UserAsigned user = asignedRepository.findAsignedById(id_asig);
